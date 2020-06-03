@@ -37,19 +37,19 @@ export default function reducer(statePart = [], action = {}) {
     case ADD_TAG:
       return {
         ...statePart,
-        tags: [...statePart.tags, action.payload.tag],
+        tags: [...statePart.tags, action.payload],
       };
     case REMOVE_TAG:
       return {
         ...statePart,
-        tags: [...statePart.tags.filter((tag) => tag != action.payload.tag)],
+        tags: statePart.tags.filter((tag) => tag != action.payload),
       };
     case CHANGE_DURATION:
       return {
         ...statePart,
         duration: {
           ...statePart.duration,
-          [action.payload.type]: action.payload.value,
+          [action.payload.type]: parseInt(action.payload.value),
         },
       };
     default:

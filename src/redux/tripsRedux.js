@@ -12,7 +12,7 @@ export const getFilteredTrips = ({ trips, filters }) => {
   }
 
   // TODO - filter by duration
-  if (filters.duration.from && filters.duration.to) {
+  if (filters.duration) {
     output = output.filter(
       (trip) =>
         trip.days >= filters.duration.from && trip.days <= filters.duration.to
@@ -20,16 +20,26 @@ export const getFilteredTrips = ({ trips, filters }) => {
   }
   // TODO - filter by tags
   if (filters.tags) {
-    const pattern = new RegExp(filters.tags, 'i');
-    output = output.filter((trip) => pattern.test(trip.tags));
+    filters.tags.forEach((tag) => {
+      output = output.filter((trip) =>
+        trip.tags.find((tripTag) => tripTag === tag)
+      );
+    });
   }
   // TODO - sort by cost descending (most expensive goes first)
-
+  const sortByCost = (a, b) => {
+    const low = a.cost.replace('$', '');
+    const high = b.cost.replace('$', '');
+    if (parseInt(low) > parseInt(high)) return -1;
+    if (parseInt(low) < parseInt(high)) return 1;
+    else return 0;
+  };
+  output = output.sort(sortByCost);
   return output;
 };
 
 export const getTripById = ({ trips }, tripId) => {
-  const filtered = trips.filter((trip) => trip.id == trip.Id);
+  const filtered = trips.filter((trip) => trip.id == tripId);
 
   // TODO - filter trips by tripId
 
@@ -47,7 +57,6 @@ export const getTripsForCountry = ({ trips }, countryCode) => {
 };
 
 /* ACTIONS */
-
 /*
 // action name creator
 const reducerName = 'trips';
