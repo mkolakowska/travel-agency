@@ -27,14 +27,11 @@ export const getFilteredTrips = ({ trips, filters }) => {
     });
   }
   // TODO - sort by cost descending (most expensive goes first)
-  const sortByCost = (a, b) => {
-    const low = a.cost.replace('$', '');
-    const high = b.cost.replace('$', '');
-    if (parseInt(low) > parseInt(high)) return -1;
-    if (parseInt(low) < parseInt(high)) return 1;
-    else return 0;
-  };
-  output = output.sort(sortByCost);
+  output.sort(function (a, b) {
+    let low = a.cost.replace('$', '');
+    let heigh = b.cost.replace('$', '');
+    return parseInt(low) < parseInt(heigh) ? 1 : -1;
+  });
   return output;
 };
 
