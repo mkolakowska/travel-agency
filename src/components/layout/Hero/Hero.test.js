@@ -12,13 +12,14 @@ describe('Component Hero', () => {
   /*it('should throw error without required props', () => {
     expect(() => shallow(<Hero />)).toThrow();
   });*/
-  it('should render correct title and image', () => {
+  it('should render correct title, image and HappyHourAd', () => {
     const expectedTitle = 'Lorem ipsum';
     const expectedImage = 'image.jpg';
     const component = shallow(
       <Hero titleText={expectedTitle} imageSrc={expectedImage} />
     );
 
+    expect(component.find('HappyHourAd').length).toEqual(1);
     const renderedTitle = component.find('.title').text();
     expect(renderedTitle).toEqual(expectedTitle);
     expect(component.find('.image').prop('src')).toEqual(expectedImage);
